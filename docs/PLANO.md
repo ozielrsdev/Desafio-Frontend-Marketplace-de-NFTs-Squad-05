@@ -19,20 +19,20 @@ Pesos de complexidade: 1 (leve) a 5 (pesado).
 | wallets | 2 | Dev 3 |
 | ordering | 5 | Dev 3 |
 
-### Dev 1 — Fundação e Conta (10)
+### Dev 1(Gustavo) — Fundação e Conta (10)
 `mocking`, `identity`, `profile`, `favorites`
 
 - Base de todo o resto: sessão, `userId` nas query keys, isolamento de dados e motor do MSW.
 - Responsável pelo scaffold (Vite, Tailwind, shadcn, Router, Query, Axios) e por `shared/Money`.
 - Dono do servidor Socket.IO do mock e da API de controle (cenários, reset, emissão de eventos).
 
-### Dev 2 — Descoberta, Carrinho e Tempo real (10)
+### Dev 2(Oziel) — Descoberta, Carrinho e Tempo real (10)
 `catalog`, `cart`, `realtime`
 
 - O `nft.updated` atinge catálogo, detalhe e carrinho: quem constrói as telas integra o evento.
 - Dono da infraestrutura do cliente Socket.IO (envelope, dedupe por `eventId`, regra de `version`, reconexão, hooks).
 
-### Dev 3 — Compra (10)
+### Dev 3(Samuel) — Compra (10)
 `pricing`, `wallets`, `ordering`
 
 - Cadeia crítica: cotação → carteira → pedido.
