@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* Tokens semânticos. Troque aqui para alinhar ao Figma (ver docs/specs/catalog.md). */
+:root {
+  --background: #0b0b12;
+  --foreground: #f1f1f7;
+  --surface: #14141f;
+  --surface-2: #1c1c2b;
+  --border: #2d2d42;
+  --muted-foreground: #a7a7bd;
+  --primary: #7c5cff;
+  --primary-foreground: #ffffff;
+  --accent: #22d3ee;
+  --success: #34d399;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --ring: #a99bff;
+  --radius: 1rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-muted: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-ring: var(--ring);
+  --font-sans: "Exo 2", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Orbitron", "Exo 2", ui-sans-serif, sans-serif;
+  --radius-lg: var(--radius);
+  --breakpoint-xs: 390px;
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  html { color-scheme: dark; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    min-height: 100dvh;
+  }
+  :focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 6px; }
+  button, a, [role="button"], select, label[for] { cursor: pointer; touch-action: manipulation; }
+  button:disabled { cursor: not-allowed; }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+.skeleton { position: relative; overflow: hidden; background: var(--surface-2); border-radius: 0.75rem; }
+.skeleton::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.07), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .skeleton::after { animation: none; }
+}
+
+.sr-only-focusable:not(:focus):not(:focus-within) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
