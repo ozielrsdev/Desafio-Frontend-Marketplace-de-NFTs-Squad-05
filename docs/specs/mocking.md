@@ -54,3 +54,10 @@ Backend real, banco de dados real, autenticação real, mock de blockchain.
 ## Further Notes
 
 Documentar no README: seleção/reset de cenários, credenciais, e como reproduzir cada falha.
+
+### Decisões da implementação (Dev 1)
+
+- Motor: `route()`/`authedRoute()` em `src/mocks/engine/route.ts`. Cenários em `src/mocks/scenarios`. API de controle em `window.__mocks` (exposta só após o worker iniciar).
+- Seleção de cenário: `?scenario=<id>` > storage > `VITE_MOCK_SCENARIO` > `default`. `?mocks-reset=1` faz o reset completo.
+- Socket: `realtimeServer.publishNftUpdate/publishOrderUpdate` alteram o banco e emitem o evento juntos. O cliente precisa usar `transports: ['websocket']` (ver ARCHITECTURE.md §6).
+- Os contadores de `times` das regras de falha ficam em memória: um refresh reinicia a contagem.

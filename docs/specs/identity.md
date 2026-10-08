@@ -52,3 +52,11 @@ Recuperação de senha, OAuth/social login, 2FA, e-mail real, carteiras reais (v
 ## Further Notes
 
 Dependência: todos os demais contextos consomem `userId` deste contexto via API pública.
+
+### Decisões da implementação (Dev 1)
+
+- Token salvo em `localStorage` (`nftm:session`) + validação via `GET /auth/session` no boot. A expiração é tratada por um timer local e por 401.
+- Hooks de ciclo de vida para os outros contextos (`identityEvents`): `onSignedIn` (Cart: merge do visitante), `onBeforeSessionEnd` (Ordering: salvar o rascunho do checkout) e `onSessionEnded` (Realtime: `disconnect()`).
+- Senha forte: 8–72 caracteres, com letra e número (`passwordSchema` no contrato, igual no front e no mock).
+- Expiração preserva o storage privado do usuário (rascunhos); logout e troca de usuário limpam tudo.
+- Pendente: conferir com o Figma o layout de Login e Cadastro.

@@ -43,3 +43,9 @@ Listas/coleções nomeadas, compartilhamento de favoritos, página dedicada de f
 ## Further Notes
 
 Esta é a interação otimista mínima exigida pelo enunciado (§4).
+
+### Decisões da implementação (Dev 1)
+
+- API pública para o Catalog: `<FavoriteButton nftId nftTitle variant="icon|labeled" />` e `useIsFavorite(nftId)`.
+- Visitante que clica em favoritar vai ao login com `returnTo` e volta ao mesmo lugar para refazer a ação ("reapresentada").
+- Cenário MSW `favorites-fail` para o E2E §9.4. O E2E completo entra quando houver cards ou detalhe na UI (Catalog).

@@ -45,3 +45,9 @@ Exclusão de conta, preferências de notificação, 2FA, verificação de e-mail
 ## Further Notes
 
 Os campos exatos do formulário devem ser conferidos no Figma.
+
+### Decisões da implementação (Dev 1)
+
+- Campos adotados até a conferência com o Figma: nome, e-mail, site (opcional, http/https) e bio (até 280). O avatar é PNG/JPG/WEBP de até 1 MB, enviado como data URL (upload simulado).
+- O rascunho do formulário é salvo por usuário quando a sessão expira e restaurado após o novo login (história 12).
+- Erros da API (`email_in_use`, `wrong_password`, `avatar_invalid`, `validation_error`) aparecem no campo correspondente.
