@@ -43,6 +43,16 @@ Tela de Pagamento (dados do colecionador, carteira e rede, revisão, envio) e Co
 - Remoção do carrinho executada pelo caso de uso após confirmação, apenas dos itens/quantidades comprados.
 - Rotas: `/checkout`, `/orders/:id/confirmation` (privadas).
 
+## Decisões de implementação (Dev 3)
+
+- `POST /orders` com `Idempotency-Key`; chave persistida por usuário e **reutilizada enquanto o conteúdo (itens, cupom, rede, carteira, dados) for o mesmo**; muda o conteúdo → chave nova. Erros: 409 `stale_quote` (vira diff + reconfirmação), 409 `idempotency_conflict`, 409 `availability_conflict`.
+- Revalidação (`revalidateQuote` do Pricing) imediatamente antes de criar; se mudou, nenhum pedido é criado.
+- Retry automático só para `transient`/`network` (1×, mesma chave). Timeout da criação: `VITE_ORDER_TIMEOUT_MS` (8000).
+- `order.updated`: envelope em `realtime.md`; `EventGate` (shared/realtime) descarta duplicados/antigos; `applyOrderUpdate` garante terminal imutável. Reconexão → invalida `['orders', userId]`.
+- Liquidação (`useOrderSettlement`): uma vez por pedido terminal; `confirmed` remove do carrinho só o comprado (porta `CartPort`); `rejected` mantém itens.
+- Dados do colecionador assumidos: nome completo e e-mail (**confirmar com o frame de Pagamento do Figma**).
+- Limitação do mock: `@mswjs/socket.io-binding` não suporta rooms/namespaces/auth; o servidor emite para todos os clientes e o cliente filtra por `userId`.
+
 ## Testing Decisions
 
 - E2E §9.6 (compra completa), §9.7 (recusa, clique repetido, timeout+idempotência), §9.9, §9.10 (eventos duplicados/antigos, desconexão, retomada).
