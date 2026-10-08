@@ -32,6 +32,12 @@ Tela de Carteiras para gerenciar as duas carteiras e uma abstração de "provedo
 - Porta `WalletConnector` (application) com adapter simulado (infra) cujo comportamento (conectar/recusar/desconectar) é governado pelo cenário ativo do MSW/config — sem caminhos de negócio alternativos em componentes. Nenhuma extensão de carteira real.
 - Estado de conexão é efêmero (não persistir entre sessões; limpar no logout).
 
+## Decisões de implementação (Dev 3)
+
+- Cada carteira tem **uma** rede (registrada no cadastro); no checkout a rede da cotação é a da carteira escolhida.
+- Contratos: `GET /wallets` → `{wallets[]}`; `POST /wallets` (`role`, `address`, `network`) e `PATCH /wallets/:id` retornam o conjunto atualizado; 422 `{fields}` por campo; 409 duplicidade → erro no campo `address`. Conexão simulada: `POST|DELETE /wallets/:id/connection` (403 `connection_refused`), governada por `window.__mocks.wallets`.
+- Estado de conexão só em memória (`WalletConnectionProvider`, remontado por `userId`).
+
 ## Testing Decisions
 
 - E2E §9.8 (carteiras com erros de validação) e parte de §9.6/§9.7 (conexão/recusa no checkout).
