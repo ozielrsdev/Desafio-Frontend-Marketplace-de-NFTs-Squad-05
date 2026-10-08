@@ -30,7 +30,9 @@ Contexto responsável por **cotação**: valida cupom, disponibilidade, desconto
 - Pedido referencia `quoteId`/versão; servidor rejeita (409) cotação obsoleta → UI mostra diff e exige reconfirmação.
 - Revalidação obrigatória imediatamente antes do envio do pedido.
 - Query key inclui `userId` e hash dos insumos (itens, cupom, rede); `signal` cancela cotações obsoletas.
-- Apresentação de ETH: número de casas definido no contrato e documentado.
+- Apresentação de ETH: **sem perda** — exibe todas as casas significativas (máx. 18, `ETH_DECIMALS`), mínimo de 2 (`1.50 ETH`); nunca arredonda/trunca na UI. `Money.parse` rejeita > 18 casas.
+- `createQuote` valida invariantes (subtotal = Σ linhas; 0 ≤ desconto ≤ subtotal; total = subtotal − desconto + taxa). Cupom é validado por `useApplyCoupon` antes de entrar no estado do carrinho (erro 422 não altera total nem cupom vigente).
+- Contrato `POST /quotes` (DTO zod em `infrastructure/dto.ts`): erros `coupon_invalid | coupon_expired | coupon_not_applicable` (422), `stale_quote`/`availability_conflict` (409). Taxas MSW: ethereum 0.003, polygon 0.0005, arbitrum 0.0012 (provisório até o Figma).
 
 ## Testing Decisions
 
