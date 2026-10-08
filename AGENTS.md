@@ -1,6 +1,6 @@
 # AGENTS.md — NFT Marketplace (Desafio Frontend, Squad 05)
 
-Instruções para agentes e desenvolvedores. O enunciado completo está em `README.md`; as specs por domínio estão em `docs/specs/`. Em caso de conflito, o `README.md` prevalece.
+Instruções para agentes e desenvolvedores. O enunciado completo está em `docs/ENUNCIADO.md` (antigo `README.md`); as specs por domínio estão em `docs/specs/`. Em caso de conflito, o enunciado prevalece.
 
 ## 1. Objetivo
 

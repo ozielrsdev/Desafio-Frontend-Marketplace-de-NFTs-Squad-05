@@ -1,0 +1,14 @@
+node_modules
+dist
+*.local
+.env
+.vite
+coverage
+playwright-report
+test-results
+blob-report
+.lighthouseci
+lighthouse-reports
+*.tsbuildinfo
+.DS_Store
+__pycache__
